@@ -1,0 +1,199 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* 3D Skillverse Brand Color Palette */
+    --ink-navy: 218 62% 7%;
+    --charcoal: 218 28% 7%;
+    --ivory-mist: 48 15% 97%;
+    --teal-accent: 172 85% 40%;
+    --royal-violet: 258 90% 57%;
+    --slate-mute: 215 16% 47%;
+    --amber-glow: 38 92% 50%;
+    --success-green: 142 71% 45%;
+
+    /* System colors mapped to brand */
+    --background: var(--ink-navy);
+    --foreground: var(--ivory-mist);
+
+    --card: var(--charcoal);
+    --card-foreground: var(--ivory-mist);
+
+    --popover: var(--charcoal);
+    --popover-foreground: var(--ivory-mist);
+
+    --primary: var(--teal-accent);
+    --primary-foreground: var(--ink-navy);
+
+    --secondary: var(--royal-violet);
+    --secondary-foreground: var(--ivory-mist);
+
+    --muted: var(--charcoal);
+    --muted-foreground: var(--slate-mute);
+
+    --accent: var(--amber-glow);
+    --accent-foreground: var(--ink-navy);
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: var(--ivory-mist);
+
+    --border: 218 28% 15%;
+    --input: var(--charcoal);
+    --ring: var(--teal-accent);
+
+    --radius: 0.75rem;
+
+    /* Design system tokens */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--teal-accent)), hsl(var(--royal-violet)));
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--ink-navy)), hsl(var(--charcoal)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--ink-navy)) 0%, hsl(var(--charcoal)) 50%, hsl(var(--ink-navy)) 100%);
+    
+    --shadow-glow: 0 0 40px hsl(var(--teal-accent) / 0.3);
+    --shadow-card: 0 10px 30px -10px hsl(var(--ink-navy) / 0.8);
+    --shadow-elegant: 0 20px 60px -15px hsl(var(--teal-accent) / 0.25);
+    
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-elastic: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    
+    /* Typography */
+    --font-heading: 'Inter', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    font-family: var(--font-body);
+    scroll-behavior: smooth;
+  }
+
+  html {
+    scroll-padding-top: 4rem;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  /* Custom utility classes */
+  .text-gradient {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .glow-effect {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .card-shadow {
+    box-shadow: var(--shadow-card);
+  }
+
+  .elegant-shadow {
+    box-shadow: var(--shadow-elegant);
+  }
+
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+
+  .transition-elastic {
+    transition: var(--transition-elastic);
+  }
+
+  /* Scroll animations respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  /* Focus styles */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background;
+  }
+
+  /* Glass morphism effect */
+  .glass {
+    backdrop-filter: blur(10px);
+    background: hsl(var(--charcoal) / 0.8);
+    border: 1px solid hsl(var(--border) / 0.2);
+  }
+}
+
+@layer components {
+  /* Hero button variant */
+  .btn-hero {
+    @apply bg-gradient-to-r from-teal-accent to-royal-violet text-ink-navy font-semibold px-8 py-3 rounded-lg transition-elastic hover:scale-105 hover:shadow-elegant focus-ring;
+  }
+
+  /* Glowing card */
+  .card-glow {
+    @apply bg-card border border-border/20 rounded-xl p-6 transition-smooth hover:border-primary/40 hover:shadow-glow;
+  }
+
+  /* Floating animation */
+  .float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  /* Pulse glow */
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulse-glow {
+    from { box-shadow: 0 0 20px hsl(var(--teal-accent) / 0.4); }
+    to { box-shadow: 0 0 40px hsl(var(--teal-accent) / 0.8); }
+  }
+
+  /* Shimmer effect */
+  .shimmer {
+    background: linear-gradient(90deg, transparent, hsl(var(--teal-accent) / 0.4), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  /* Typewriter cursor */
+  .typewriter::after {
+    content: '|';
+    color: hsl(var(--teal-accent));
+    animation: blink 1s infinite;
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+}
